@@ -3,7 +3,6 @@ import Container from "../../../components/Container.jsx";
 import {get} from "lodash";
 import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Table} from "antd";
 import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
-import {useTranslation} from "react-i18next";
 import usePaginateQuery from "../../../hooks/api/usePaginateQuery.js";
 import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
@@ -11,29 +10,26 @@ import useDeleteQuery from "../../../hooks/api/useDeleteQuery.js";
 import CreateEditUser from "../components/CreateEditUser.jsx";
 
 const UsersContainer = () => {
-    const {t} = useTranslation();
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(10);
     const [itemData, setItemData] = useState(null);
-    const [searchKey,setSearchKey] = useState();
+    const [searchKey, setSearchKey] = useState();
     const [isCreateModalOpenCreate, setIsCreateModalOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-    const {data,isLoading,isFetching,refetch} = usePaginateQuery({
+    const {data, isLoading, refetch} = usePaginateQuery({
         key: KEYS.user_list,
         url: URLS.user_list,
         params: {
-            params: {
-                size,
-                search: searchKey
-            }
+            size,
+            search: searchKey
         },
         page
     });
     const { mutate } = useDeleteQuery({
-        listKeyId: KEYS.user_delete
+        listKeyId: KEYS.user_list
     });
     const useDelete = (id) => {
-        mutate({url: `${URLS.user_delete}/${id}`},{
+        mutate({url: `${URLS.user_delete}/${id}`}, {
             onSuccess: () => {
                 refetch();
             }
@@ -41,32 +37,32 @@ const UsersContainer = () => {
     }
     const columns = [
         {
-            title: t("ID"),
+            title: "ID",
             dataIndex: "id",
             key: "id",
         },
         {
-            title: t("FIO"),
+            title: "Ф.И.О",
             dataIndex: "fio",
             key: "fio",
         },
         {
-            title: t("Phone number"),
+            title: "Телефон рақами",
             dataIndex: "phoneNumber",
             key: "phoneNumber",
         },
         {
-            title: t("Region"),
+            title: "Ҳудуд",
             dataIndex: "region",
             key: "region",
         },
         {
-            title: t("Zone"),
+            title: "Зона",
             dataIndex: "zone",
             key: "zone",
         },
         {
-            title: t("Edit / Delete"),
+            title: "Таҳрирлаш / Ўчириш",
             width: 120,
             fixed: 'right',
             key: 'action',
@@ -77,11 +73,11 @@ const UsersContainer = () => {
                         setItemData(data)
                     }} />
                     <Popconfirm
-                        title={t("Delete")}
-                        description={t("Are you sure to delete?")}
-                        onConfirm={() => useDelete(get(data,'id'))}
-                        okText={t("Yes")}
-                        cancelText={t("No")}
+                        title="Ўчириш"
+                        description="Ўчиришни тасдиқлайсизми?"
+                        onConfirm={() => useDelete(get(data, 'id'))}
+                        okText="Ҳа"
+                        cancelText="Йўқ"
                     >
                         <Button danger icon={<DeleteOutlined />}/>
                     </Popconfirm>
@@ -94,7 +90,7 @@ const UsersContainer = () => {
             <Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
                 <Space size={"middle"}>
                     <Input.Search
-                        placeholder={t("Search")}
+                        placeholder="Қидириш"
                         onChange={(e) => setSearchKey(e.target.value)}
                         allowClear
                     />
@@ -103,13 +99,13 @@ const UsersContainer = () => {
                         type={"primary"}
                         onClick={() => setIsCreateModalOpen(true)}
                     >
-                        {t("New user")}
+                        Янги фойдаланувчи
                     </Button>
                 </Space>
 
                 <Table
                     columns={columns}
-                    dataSource={get(data,'data.content',[])}
+                    dataSource={get(data, 'data.content', [])}
                     bordered
                     size={"middle"}
                     pagination={false}
@@ -118,16 +114,16 @@ const UsersContainer = () => {
 
                 <Row justify={"end"} style={{marginTop: 10}}>
                     <Pagination
-                        current={page+1}
+                        current={page + 1}
                         onChange={(page) => setPage(page - 1)}
-                        total={get(data,'data.totalPages') * 10 }
+                        total={get(data, 'data.totalPages') * 10 }
                         showSizeChanger={false}
                     />
                 </Row>
             </Space>
 
             <Modal
-                title={t('Create new user')}
+                title="Янги фойдаланувчи яратиш"
                 open={isCreateModalOpenCreate}
                 onCancel={() => setIsCreateModalOpen(false)}
                 footer={null}
@@ -139,7 +135,7 @@ const UsersContainer = () => {
             </Modal>
 
             <Modal
-                title={t("Edit user")}
+                title="Фойдаланувчини таҳрирлаш"
                 open={isEditModalOpen}
                 onCancel={() => setIsEditModalOpen(false)}
                 footer={null}

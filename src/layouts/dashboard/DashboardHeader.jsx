@@ -4,7 +4,6 @@ import logoDark from "../../assets/images/logoDark.svg";
 import React, {useState} from "react";
 import {Header} from "antd/es/layout/layout";
 import {FileExcelOutlined, LogoutOutlined, MoonOutlined, SunOutlined} from "@ant-design/icons";
-import {useTranslation} from "react-i18next";
 import {useSettingsStore, useStore} from "../../store";
 import {get} from "lodash";
 import Swal from "sweetalert2";
@@ -24,7 +23,6 @@ const DashboardHeader = () => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
-    const {t, i18n} = useTranslation();
     const setDarkMode = useSettingsStore((state) => get(state, "setDarkMode", () => {}));
     const darkMode = useSettingsStore((state) => get(state, "darkMode"));
     const setUser = useStore((state) => get(state, "setUser", () => {}));
@@ -38,19 +36,20 @@ const DashboardHeader = () => {
         url: KEYS.get_file,
         params: {
             responseType: 'blob'
-        }
+        },
+        enabled: false
     })
 
     const logout = () => {
         Swal.fire({
-            title: t("Are you sure you want to exit??"),
+            title: "Чиқишга ишончингиз комилми ?",
             icon: "warning",
             backdrop: "rgba(0,0,0,0.9)",
             background: "none",
             showCancelButton: true,
             confirmButtonColor: "#13D6D1",
-            confirmButtonText: t("Yes"),
-            cancelButtonText: t("Back"),
+            confirmButtonText: "Ҳа",
+            cancelButtonText: "Орқага",
             customClass: {
                 title: "title-color",
                 content: "text-color",
@@ -82,7 +81,7 @@ const DashboardHeader = () => {
           }}
       >
           <Row justify={"space-between"}>
-              <Col>
+              <Col flex={"auto"}>
                   <Image
                       src={darkMode ? logoDark : logo}
                       preview={false}
@@ -92,7 +91,7 @@ const DashboardHeader = () => {
                   />
               </Col>
               <Col>
-                  <Space size={"middle"}>
+                  <Space size={"middle"} style={{width: "100%"}}>
                       <RangePicker
                           id={{start: 'from', end: 'to',}}
                           onChange={onChange}
@@ -102,7 +101,7 @@ const DashboardHeader = () => {
                           type={"primary"}
                           icon={<FileExcelOutlined />}
                       >
-                          Get file
+                          Филени юклаш
                       </Button>
                       <Switch
                           checkedChildren={<SunOutlined />}
@@ -115,7 +114,7 @@ const DashboardHeader = () => {
                           style={{height: 50,}}
                           onClick={logout}
                       >
-                          {t("Logout")}
+                          Чиқиш
                       </Button>
                   </Space>
               </Col>

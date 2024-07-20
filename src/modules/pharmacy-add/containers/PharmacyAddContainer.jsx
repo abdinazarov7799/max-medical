@@ -38,63 +38,83 @@ const PharmacyAddContainer = ({userId}) => {
                 autoComplete="off"
                 layout={"vertical"}
                 form={form}
+                style={{minHeight: "100vh"}}
             >
-               <Space direction={"vertical"} style={{width:'100%'}}>
-                   <Form.Item
-                       label={"name"}
-                       name="name"
-                       rules={[{required: true,}]}
-                   >
-                       <Input />
-                   </Form.Item>
+                <Space direction={"vertical"} style={{width:'100%'}}>
+                    <Form.Item
+                        label={"Дорихона номи"}
+                        name="name"
+                        rules={[{required: true,}]}
+                    >
+                        <Input />
+                    </Form.Item>
 
-                   <Form.Item
-                       label={"address"}
-                       name="address"
-                       rules={[{required: true,}]}
-                   >
-                       <Input />
-                   </Form.Item>
+                    <Form.Item
+                        label={"Манзил"}
+                        name="address"
+                        rules={[{required: true,}]}
+                    >
+                        <Input />
+                    </Form.Item>
 
-                   <Form.Item
-                       label={"phoneNumber"}
-                       name="phoneNumber"
-                       rules={[{required: true,}]}
-                   >
-                       <InputNumber controls={false} style={{width: "100%"}}/>
-                   </Form.Item>
+                    <Form.Item
+                        label={"Телефон рақами"}
+                        name="phoneNumber"
+                        rules={[{required: true,}]}
+                    >
+                        <InputNumber controls={false} style={{width: "100%"}}/>
+                    </Form.Item>
 
-                   <Form.Item
-                       label={"pharmacistFIO"}
-                       name="pharmacistFIO"
-                       rules={[{required: true,}]}
-                   >
-                       <Input />
-                   </Form.Item>
+                    <Form.Item
+                        label={"Фармацевт Ф.И.О."}
+                        name="pharmacistFIO"
+                        rules={[{required: true,}]}
+                    >
+                        <Input />
+                    </Form.Item>
 
-                   <Form.Item
-                       label={"remainCount"}
-                       name="remainCount"
-                       rules={[{required: true,}]}>
-                       <Select
-                           placeholder={"remainCount"}
-                           optionFilterProp="children"
-                           loading={isLoadingMedicines}
-                           options={get(medicenes,'data')?.map((item) => {
-                               return {
-                                   value: get(item,'id'),
-                                   label: get(item,'name')
-                               }
-                           })}
-                       />
-                   </Form.Item>
+                    <Form.Item
+                        label={"Мавжуд дорилар"}
+                        name="remainCount"
+                        rules={[{required: true,}]}>
+                        <Select
+                            mode={"multiple"}
+                            placeholder={"Дорилар"}
+                            optionFilterProp="children"
+                            loading={isLoadingMedicines}
+                            options={get(medicenes,'data')?.map((item) => {
+                                return {
+                                    value: get(item,'id'),
+                                    label: get(item,'name')
+                                }
+                            })}
+                        />
+                    </Form.Item>
 
-                   <Form.Item>
-                       <Button block type="primary" htmlType="submit" loading={isLoading}>
-                           Send
-                       </Button>
-                   </Form.Item>
-               </Space>
+                    <Form.Item
+                        label={"Брон қилинган дорилар"}
+                        name="reservationCount"
+                        rules={[{required: true,}]}>
+                        <Select
+                            mode={"multiple"}
+                            placeholder={"Дорилар"}
+                            optionFilterProp="children"
+                            loading={isLoadingMedicines}
+                            options={get(medicenes,'data')?.map((item) => {
+                                return {
+                                    value: get(item,'id'),
+                                    label: get(item,'name')
+                                }
+                            })}
+                        />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button block type="primary" htmlType="submit" loading={isLoading}>
+                            Юбориш
+                        </Button>
+                    </Form.Item>
+                </Space>
             </Form>
         </Container>
     );

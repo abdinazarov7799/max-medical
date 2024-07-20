@@ -4,7 +4,6 @@ import NProgress from "nprogress";
 import storage from "../storage";
 import config from "../../config";
 import Swal from "sweetalert2";
-import i18next from "i18next";
 
 NProgress.configure({
   showSpinner: true,
@@ -29,7 +28,7 @@ request.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
+  () => {
     NProgress.done(true);
   }
 );
@@ -47,45 +46,21 @@ request.interceptors.response.use(
           icon: "error",
           backdrop: "rgba(0,0,0,0.9)",
           background: "none",
-          title: "Tokeningiz faol emas. Iltimos tizimga qayta kiring !!! ",
+          title: "Токенингиз фаол эмас. Илтимос тизимга қайта киринг !!! ",
           showConfirmButton: true,
           showCancelButton: false,
           confirmButtonColor: "#d33",
           cancelButtonColor: "#13D6D1",
-          confirmButtonText: "Chiqish",
+          confirmButtonText: "Чиқиш",
           customClass: {
             title: "title-color",
           },
-        }).then((result) => {
+        }).then(() => {
           window.localStorage.clear();
           window.location.reload();
         });
     }
-    // if (statusCode == 500) {
-    //   if (!includes(error?.config?.url, "user")) {
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "error",
-    //       backdrop: "rgba(0,0,0,0.9)",
-    //       background: "none",
-    //       title: i18next.t("Sorry, Server is not working"),
-    //       showConfirmButton: true,
-    //       showCancelButton: true,
-    //       confirmButtonColor: "#d33",
-    //       cancelButtonColor: "#13D6D1",
-    //       confirmButtonText: i18next.t("Log out"),
-    //       cancelButtonText: i18next.t("Cancel"),
-    //       customClass: {
-    //         title: "title-color",
-    //       },
-    //     }).then((result) => {
-    //       if (result.isConfirmed) {
-    //         window.localStorage.clear();
-    //         window.location.reload();
-    //       }
-    //     });
-    //   }
-    // }
+
     NProgress.done(true);
     return Promise.reject(error);
   }

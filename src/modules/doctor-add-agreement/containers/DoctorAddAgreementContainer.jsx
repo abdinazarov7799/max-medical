@@ -31,9 +31,10 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 autoComplete="off"
                 layout={"vertical"}
                 form={form}
+                style={{minHeight: "100vh"}}
             >
                 <Form.Item
-                    label={"firstName"}
+                    label={"Исм"}
                     name="firstName"
                     rules={[{required: true,}]}
                 >
@@ -41,7 +42,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"lastName"}
+                    label={"Фамилия"}
                     name="lastName"
                     rules={[{required: true,}]}
                 >
@@ -49,7 +50,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"middleName"}
+                    label={"Отасининг исми"}
                     name="middleName"
                     rules={[{required: true,}]}
                 >
@@ -57,7 +58,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"phoneNumber"}
+                    label={"Телефон рақами"}
                     name="phoneNumber"
                     rules={[{required: true,}]}
                 >
@@ -65,7 +66,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"work"}
+                    label={"Иш жойи"}
                     name="work"
                     rules={[{required: true,}]}
                 >
@@ -73,7 +74,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"position"}
+                    label={"Лавозим"}
                     name="position"
                     rules={[{required: true,}]}
                 >
@@ -81,7 +82,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"address"}
+                    label={"Манзил"}
                     name="address"
                     rules={[{required: true,}]}
                 >
@@ -89,7 +90,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"medicines"}
+                    label={"Дорилар"}
                     name="medicines"
                     rules={[{required: true,}]}
                 >
@@ -97,7 +98,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"cardNumber"}
+                    label={"Карта рақами"}
                     name="cardNumber"
                     rules={[{required: true,}]}
                 >
@@ -105,7 +106,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"pharmacyName"}
+                    label={"Дорихона номи"}
                     name="pharmacyName"
                     rules={[{required: true,}]}
                 >
@@ -113,7 +114,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 </Form.Item>
 
                 <Form.Item
-                    label={"pharmacyPhoneNumber"}
+                    label={"Дорихона телефон рақами"}
                     name="pharmacyPhoneNumber"
                     rules={[{required: true,}]}
                 >
@@ -122,7 +123,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
 
                 <Form.Item>
                     <Button block type="primary" htmlType="submit" loading={isLoading}>
-                        Send
+                        Юбориш
                     </Button>
                 </Form.Item>
             </Form>
