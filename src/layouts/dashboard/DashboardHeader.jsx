@@ -1,17 +1,19 @@
-import {Button, Col, DatePicker, Image, Row, Space, Switch, theme} from "antd";
+import React, { useEffect, useState } from "react";
+import {Button, Col, DatePicker, Image, Layout, Row, Space, Switch, theme} from "antd";
+import { FileExcelOutlined, LogoutOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { get } from "lodash";
+import dayjs from "dayjs";
+import { saveAs } from "file-saver";
+import useGetAllQuery from "../../hooks/api/useGetAllQuery.js";
+import { KEYS } from "../../constants/key.js";
+import { URLS } from "../../constants/url.js";
+import { useSettingsStore, useStore } from "../../store";
+import storage from "../../services/storage";
 import logo from "../../assets/images/logo.svg";
 import logoDark from "../../assets/images/logoDark.svg";
-import React, {useState} from "react";
-import {Header} from "antd/es/layout/layout";
-import {FileExcelOutlined, LogoutOutlined, MoonOutlined, SunOutlined} from "@ant-design/icons";
-import {useSettingsStore, useStore} from "../../store";
-import {get} from "lodash";
-import Swal from "sweetalert2";
-import {useNavigate} from "react-router-dom";
-import storage from "../../services/storage";
-import dayjs from "dayjs";
-import useGetAllQuery from "../../hooks/api/useGetAllQuery.js";
-import {KEYS} from "../../constants/key.js";
+const { Header } = Layout;
 const { RangePicker } = DatePicker;
 
 const disabledDate = (current) => {
@@ -19,7 +21,6 @@ const disabledDate = (current) => {
 };
 
 const DashboardHeader = () => {
-
     const {
         token: { colorBgContainer },
     } = theme.useToken();
@@ -29,16 +30,24 @@ const DashboardHeader = () => {
     const setAuthenticated = useStore((state) => get(state, "setAuthenticated", () => {}));
     const clearToken = useSettingsStore((state) => get(state, "setToken", () => {}));
     const navigate = useNavigate();
-    const [dateRange, setDateRange] = useState({from: null, to: null});
+    const [dateRange, setDateRange] = useState({ from: null, to: null });
 
-    const {data,isLoading} = useGetAllQuery({
+    const { data, isLoading, refetch } = useGetAllQuery({
         key: KEYS.get_file,
-        url: KEYS.get_file,
+        url: URLS.get_file,
         params: {
-            responseType: 'blob'
+            responseType: 'blob',
+            params: { ...dateRange }
         },
         enabled: false
-    })
+    });
+
+    useEffect(() => {
+        if (data) {
+            const blob = new Blob([get(data,'data')], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+            saveAs(blob, "Отчет форма.xlsx");
+        }
+    }, [data]);
 
     const logout = () => {
         Swal.fire({
@@ -66,60 +75,64 @@ const DashboardHeader = () => {
         });
     };
 
-    const onChange = (_,dateString) => {
+    const onChange = (_, dateString) => {
         setDateRange({
             from: dateString[0],
             to: dateString[1],
-        })
-    }
-  return(
-      <Header
-          theme="dark"
-          style={{
-              padding: '0 15px',
-              background: colorBgContainer,
-          }}
-      >
-          <Row justify={"space-between"}>
-              <Col flex={"auto"}>
-                  <Image
-                      src={darkMode ? logoDark : logo}
-                      preview={false}
-                      width={90}
-                      onClick={() => navigate('/')}
-                      style={{cursor: "pointer"}}
-                  />
-              </Col>
-              <Col>
-                  <Space size={"middle"} style={{width: "100%"}}>
-                      <RangePicker
-                          id={{start: 'from', end: 'to',}}
-                          onChange={onChange}
-                          disabledDate={disabledDate}
-                      />
-                      <Button
-                          type={"primary"}
-                          icon={<FileExcelOutlined />}
-                      >
-                          Филени юклаш
-                      </Button>
-                      <Switch
-                          checkedChildren={<SunOutlined />}
-                          unCheckedChildren={<MoonOutlined />}
-                          checked={darkMode}
-                          onClick={() => setDarkMode()}
-                      />
-                      <Button
-                          icon={<LogoutOutlined />}
-                          style={{height: 50,}}
-                          onClick={logout}
-                      >
-                          Чиқиш
-                      </Button>
-                  </Space>
-              </Col>
-          </Row>
-      </Header>
-  )
-}
-export default DashboardHeader
+        });
+    };
+
+    return (
+        <Header
+            theme="dark"
+            style={{
+                padding: '0 15px',
+                background: colorBgContainer,
+            }}
+        >
+            <Row justify={"space-between"}>
+                <Col flex={"auto"}>
+                    <Image
+                        src={darkMode ? logoDark : logo}
+                        preview={false}
+                        width={90}
+                        onClick={() => navigate('/')}
+                        style={{ cursor: "pointer" }}
+                    />
+                </Col>
+                <Col>
+                    <Space size={"middle"} style={{ width: "100%" }}>
+                        <RangePicker
+                            id={{ start: 'from', end: 'to', }}
+                            onChange={onChange}
+                            disabledDate={disabledDate}
+                        />
+                        <Button
+                            type={"primary"}
+                            icon={<FileExcelOutlined />}
+                            loading={isLoading}
+                            onClick={() => refetch()}
+                        >
+                            Файлни юклаш
+                        </Button>
+                        <Switch
+                            checkedChildren={<SunOutlined />}
+                            unCheckedChildren={<MoonOutlined />}
+                            checked={darkMode}
+                            onClick={() => setDarkMode()}
+                        />
+                        <Button
+                            icon={<LogoutOutlined />}
+                            style={{ height: 50, }}
+                            onClick={logout}
+                        >
+                            Чиқиш
+                        </Button>
+                    </Space>
+                </Col>
+            </Row>
+        </Header>
+    )
+};
+
+export default DashboardHeader;
