@@ -1,6 +1,7 @@
 import React, {lazy, Suspense, useEffect} from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import {useTelegram} from "../hooks/useTelegram.jsx";
 
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 // LAYOUTS
 const DashboardLayout = lazy(() => import("../layouts/dashboard/DashboardLayout.jsx"));
 const AuthLayout = lazy(() => import("../layouts/auth/AuthLayout.jsx"));
@@ -13,15 +14,13 @@ const LoginPage = lazy(() => import("../modules/auth/pages/LoginPage"));
 // AUTH
 
 // 404
-import NotFoundPage from  "../modules/auth/pages/NotFoundPage";
+const NotFoundPage = lazy(() => import("../modules/auth/pages/NotFoundPage"));
 // 404
 
 // PAGES
 import OverlayLoader from "../components/OverlayLoader.jsx";
-import {useTelegram} from "../hooks/useTelegram.jsx";
 const UsersPage = lazy(() => import("../modules/users/pages/UsersPage.jsx"));
 const PharmacyAddPage = lazy(() => import("../modules/pharmacy-add/pages/PharmacyAddPage.jsx"));
-const DoctorAddVisitPage = lazy(() => import("../modules/doctor-add-visit/pages/DoctorAddVisitPage.jsx"));
 const DoctorAddAgreementPage = lazy(() => import("../modules/doctor-add-agreement/pages/DoctorAddAgreementPage.jsx"));
 // PAGES
 
@@ -60,10 +59,6 @@ const Router = () => {
             <Route
                 path={"/pharmacy-add/:userId"}
                 element={<PharmacyAddPage />}
-            />
-            <Route
-                path={"/doctor-add-visit/:userId"}
-                element={<DoctorAddVisitPage />}
             />
             <Route
                 path={"/doctor-add-agreement/:userId"}

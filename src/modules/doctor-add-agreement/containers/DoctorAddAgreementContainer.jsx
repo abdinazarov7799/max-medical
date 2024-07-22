@@ -1,18 +1,28 @@
 import React from 'react';
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {useTelegram} from "../../../hooks/useTelegram.jsx";
-import {Button, Form, Input, InputNumber} from "antd";
+import {Button, Form, Input, InputNumber, Select} from "antd";
 import {URLS} from "../../../constants/url.js";
 import Container from "../../../components/Container.jsx";
+import useGetAllQuery from "../../../hooks/api/useGetAllQuery.js";
+import {KEYS} from "../../../constants/key.js";
+import {get} from "lodash";
 
 const DoctorAddAgreementContainer = ({userId}) => {
     const { mutate, isLoading } = usePostQuery({});
     const { onClose } = useTelegram();
     const [form] = Form.useForm();
 
+    const {data:medicines,isLoading:medicinesIsLoading} = useGetAllQuery({
+        key: KEYS.medicine_list,
+        url: URLS.medicine_list,
+    })
+
     const onFinish = (values) => {
+        const { medicines , ...formValues } = values;
         const formData = {
-            ...values,
+            ...formValues,
+            medicines: medicines?.join(),
             chatId: userId
         }
         mutate(
@@ -24,6 +34,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
             }
         );
     }
+
     return (
         <Container>
             <Form
@@ -94,7 +105,17 @@ const DoctorAddAgreementContainer = ({userId}) => {
                     name="medicines"
                     rules={[{required: true,}]}
                 >
-                    <Input />
+                    <Select
+                        mode={"multiple"}
+                        placeholder={"Дорилар"}
+                        loading={medicinesIsLoading}
+                        options={get(medicines,'data')?.map((item) => {
+                            return {
+                                value: get(item,'name'),
+                                label: get(item,'name')
+                            }
+                        })}
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -108,7 +129,6 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 <Form.Item
                     label={"Дорихона номи"}
                     name="pharmacyName"
-                    rules={[{required: true,}]}
                 >
                     <Input />
                 </Form.Item>
@@ -116,7 +136,6 @@ const DoctorAddAgreementContainer = ({userId}) => {
                 <Form.Item
                     label={"Дорихона телефон рақами"}
                     name="pharmacyPhoneNumber"
-                    rules={[{required: true,}]}
                 >
                     <InputNumber type={"number"} controls={false} style={{width: "100%"}}/>
                 </Form.Item>
