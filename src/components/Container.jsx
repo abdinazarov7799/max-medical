@@ -11,7 +11,7 @@ const Container = ({children}) => {
         <div style={{
             margin: "0 auto",
             padding: 16,
-            paddingBottom: isIOS ? 200 : 0,
+            paddingBottom: isIOS ? 220 : 16,
             borderRadius: 5,
             width: "100%",
             backgroundColor: colorBgContainer,
