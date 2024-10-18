@@ -90,21 +90,21 @@ const MedicineContainer = () => {
 
                 <Table
                     columns={columns}
-                    dataSource={get(data, 'data.content', [])}
+                    dataSource={get(data, 'data', [])}
                     bordered
                     size={"middle"}
                     pagination={false}
                     loading={isLoading}
                 />
 
-                <Row justify={"end"} style={{marginTop: 10}}>
+{/*                 <Row justify={"end"} style={{marginTop: 10}}>
                     <Pagination
                         current={page + 1}
                         onChange={(page) => setPage(page - 1)}
                         total={get(data, 'data.totalPages') * 10 }
                         showSizeChanger={false}
                     />
-                </Row>
+                </Row> */}
             </Space>
 
             <Modal
