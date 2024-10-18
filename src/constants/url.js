@@ -9,4 +9,7 @@ export const URLS = {
     doctor_add_visit: "/api/doctor/add-visit",
     doctor_add_agreement: "/api/doctor/add-agreement",
     medicine_list: "/api/medicine/get-all",
+    medicine_add: "/api/medicine/add",
+    medicine_edit: "/api/medicine/edit",
+    medicine_delete: "/api/medicine/delete",
 };

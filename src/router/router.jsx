@@ -19,6 +19,7 @@ const NotFoundPage = lazy(() => import("../modules/auth/pages/NotFoundPage"));
 
 // PAGES
 import OverlayLoader from "../components/OverlayLoader.jsx";
+import MedicinesPage from "../modules/medicines/pages/MedicinesPage.jsx";
 const UsersPage = lazy(() => import("../modules/users/pages/UsersPage.jsx"));
 const PharmacyAddPage = lazy(() => import("../modules/pharmacy-add/pages/PharmacyAddPage.jsx"));
 const DoctorAddAgreementPage = lazy(() => import("../modules/doctor-add-agreement/pages/DoctorAddAgreementPage.jsx"));
@@ -37,6 +38,10 @@ const Router = () => {
         <IsAuth>
           <Routes>
             <Route path={"/"} element={<DashboardLayout />}>
+              <Route
+                  path={"/medicines"}
+                  element={<MedicinesPage />}
+              />
               <Route
                   path={"/users"}
                   element={<UsersPage />}
