@@ -123,7 +123,7 @@ const DoctorAddAgreementContainer = ({userId}) => {
                     name="cardNumber"
                     rules={[{required: true,}]}
                 >
-                    <InputNumber controls={false} type={"number"} style={{width:"100%"}}/>
+                    <Input />
                 </Form.Item>
 
                 <Form.Item
