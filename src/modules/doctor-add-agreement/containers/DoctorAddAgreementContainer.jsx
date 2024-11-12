@@ -152,7 +152,7 @@ const DoctorAddAgreementContainer = ({ userId }) => {
                         return (
                             <Col span={12} key={medicineId}>
                                 <Form.Item
-                                    label={medicine?.label || "Дори"}
+                                    label={medicine?.name || "Дори"}
                                 >
                                     <InputNumber
                                         min={0}
