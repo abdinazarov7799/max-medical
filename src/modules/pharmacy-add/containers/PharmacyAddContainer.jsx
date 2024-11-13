@@ -115,7 +115,7 @@ const PharmacyAddContainer = ({userId}) => {
                                             <Form.Item
                                                 label={get(product,'name')}
                                                 name={`reservationCount-${get(product,'id')}`}>
-                                                <InputNumber min={0} defaultValue={0} style={{width: "100%"}}/>
+                                                <InputNumber min={0} style={{width: "100%"}}/>
                                             </Form.Item>
                                         </Col>
                                     )
