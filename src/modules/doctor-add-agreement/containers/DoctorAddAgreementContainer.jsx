@@ -99,7 +99,6 @@ const DoctorAddAgreementContainer = ({ userId }) => {
                                 <Form.Item label={medicine.name || "Дори"}>
                                     <InputNumber
                                         min={0}
-                                        defaultValue={0}
                                         onChange={(value) => handleCountChange(medicine.id, value)}
                                         style={{ width: "100%" }}
                                     />
