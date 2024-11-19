@@ -33,7 +33,7 @@ const DoctorAddAgreementContainer = ({ userId }) => {
             if (count > 0) acc[medicine.id] = count;
             return acc;
         }, {});
-
+        console.log(medicinesData,'medicinesData')
         const formData = {
             ...formValues,
             medicines: medicinesData,
@@ -95,11 +95,11 @@ const DoctorAddAgreementContainer = ({ userId }) => {
                 <Spin spinning={medicinesIsLoading} tip={"Юкланмоқда..."}>
                     <Row justify={"space-between"} align={"middle"} gutter={[10, 10]}>
                         {(medicines?.data || []).map((medicine) => (
-                            <Col span={12} key={medicine.id}>
-                                <Form.Item label={medicine.name || "Дори"}>
+                            <Col span={12} key={medicine?.id}>
+                                <Form.Item label={medicine?.name || "Дори"}>
                                     <InputNumber
                                         min={0}
-                                        onChange={(value) => handleCountChange(medicine.id, value)}
+                                        onChange={(value) => handleCountChange(medicine?.id, value)}
                                         style={{ width: "100%" }}
                                     />
                                 </Form.Item>
