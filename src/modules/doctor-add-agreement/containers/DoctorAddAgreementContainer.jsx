@@ -27,7 +27,6 @@ const DoctorAddAgreementContainer = ({ userId }) => {
     };
 
     const onFinish = (values) => {
-        const { medicines, ...formValues } = values;
         const medicinesData = (medicines?.data || []).reduce((acc, medicine) => {
             const count = medicineCounts[medicine.id] || 0;
             if (count > 0) acc[medicine.id] = count;
@@ -35,7 +34,7 @@ const DoctorAddAgreementContainer = ({ userId }) => {
         }, {});
         console.log(medicinesData,'medicinesData')
         const formData = {
-            ...formValues,
+            ...values,
             medicines: medicinesData,
             chatId: userId
         };
